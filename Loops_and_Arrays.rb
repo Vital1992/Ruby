@@ -44,6 +44,7 @@ end
 puts
 a = [0,1,2,3,4,5,6,7]
 a = a.drop(3).select{|n| n.even?}.map { |x| x * 2 } # or a.drop(3).select(&:even?).map { |x| x * 2 }
+#Removes first 3 items, select even item and multiple it by 2
 p a # => [8, 12]
 
 #Create array
