@@ -48,12 +48,14 @@ p 5 == 5.0 #true (doesn't care about type, int == float, but it's better to comp
 p 5 == 5.0.to_i #to make it the same types
 
 #=== operator
-String === "zen"  # OutRange === (1..2)   # Output: => true
-Array === [1,2,3]   # Output: => true
-Integer === 2   # Output: => trueput: => true
-Range === (1..2)   # Output: => true
-Array === [1,2,3]   # Output: => true
-Integer === 2   # Output: => true
+puts
+puts "=== Operator"
+p String === "zen"  # OutRange === (1..2)   # Output: => true
+p Array === [1,2,3]   # Output: => true
+p Integer === 2   # Output: => trueput: => true
+p Range === (1..2)   # Output: => true
+p Array === [1,2,3]   # Output: => true
+p Integer === 2   # Output: => true
 #IF use == on above, all will be false
 
 #Comparison != operator

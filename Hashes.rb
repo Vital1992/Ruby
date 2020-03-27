@@ -120,7 +120,7 @@ hs.each_key{|value| arr.push(hs.shift)}
 p arr #[[1, "ONE"], [2, "TWO"], [3, "THREE"]]
 #note that now hs Hash is empty
 
-#Easier than above method
+# Or just use .to_a instead of above
 puts
 hs = Hash.new("numbers")
 hs = {1 => "one", 2 => "two", 3 => "three"}
@@ -133,6 +133,19 @@ arr.each do |item|
   converted.store(item[0], item[1])
 end
 p converted
+
+# Or just use .to_h instead of above
+p arr.to_h
+p arr.to_h{|item| [item[1], item[0]]} #to specify key-value pairs
+p arr.to_h{|item| [Integer===item[1] ? item[1] : item[1].downcase, Integer===item[0] ? item[0] : item[0].downcase]}
+#above is using ternary operator to midify items before putting into the hash
+
+# Same as above but using function to keep code DRY
+def modify(arr)
+  Integer===arr ? arr : arr.downcase
+end
+p arr.to_h{|item| [modify(item[1]),modify(item[0])]}
+
 
 # Following are the public hash methods (assuming hash is an array object)------
 =begin
