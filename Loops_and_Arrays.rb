@@ -62,4 +62,61 @@ puts
 # declaring array
 a = [[:foo, :bar], [1, 2]]
 # to_h method example
-puts "to_h() method form : #{a.to_h()}"
+puts "to_h() method form : #{a.to_h()}" #{:foo=>:bar, 1=>2}
+
+# Merge two Arrays and convert to Hash
+arr = (0..10).to_a
+arr2 = ['a','b','c','d','e','f','g','e','h','i','k']
+arr3 = []
+arr.each_with_index do |item, index|
+  arr3.push([item,arr2[index]])
+end
+puts
+p arr3
+p arr3.to_h{|item| [item[1], item[0]]}
+
+# Break, Next and Return--------------------------------------------------------
+
+# Use the keyword next. If you do not want to continue to the next item, use break.
+#
+# When next is used within a block, it causes the block to exit immediately,
+# returning control to the iterator method, which may then begin a new iteration
+# by invoking the block again:
+@f = ['#this is comment','b','c','d','e','f','g','e','h','i','k']
+puts
+@f.each do |line|              # Iterate over the lines in file f
+  next if line[0,1] == "#"    # If this line is a comment, go to the next
+  puts line
+end
+
+# When used in a block, break transfers control out of the block, out of the
+# iterator that invoked the block, and to the first expression following the
+# invocation of the iterator:
+puts
+@f.each do |line|             # Iterate over the lines in file f
+  break if line == "f"  # If this break statement is executed...
+  puts line
+end
+
+# And finally, the usage of return in a block:
+# return always causes the enclosing method to return, regardless of how deeply
+# nested within blocks it is (except in the case of lambdas):
+
+def find(array, target)
+  @f.each_with_index do |element,index|
+    return index if (element == target)  # return from find
+  end
+  nil  # If we didn't find the element, return nil
+end
+puts
+p find(@f,"c")
+
+# '<<' -------------------------------------------------------------------------
+# '<<' is a method defined like the rest of them, in your case it means
+# "add to the end of this array
+# Syntax: obj << stuff is equivalent to obj.<<(stuff)
+
+puts
+@f<<"end"
+p @f #["#this is comment", "b", "c", "d", "e", "f", "g", "e", "h", "i", "k", "end"]
+p "Test"<<" Test2" #"Test Test2"

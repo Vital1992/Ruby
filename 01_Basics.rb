@@ -92,3 +92,16 @@ p "I'm #{age} years old"
 
 p "The result of adding 1 + 1 is #{1+1}"
 p "In 5 years I'm gonna be #{age+5}"
+
+# Types of variables------------------------------------------------------------
+=begin
++------------------+----------------------+
+| Name Begins With |    Variable Scope    |
++------------------+----------------------+
+| $                | A global variable    |
+| @                | An instance variable |
+| [a-z] or _       | A local variable     |
+| [A-Z]            | A constant           |
+| @@               | A class variable     |
++------------------+----------------------+
+=end

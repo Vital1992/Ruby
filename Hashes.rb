@@ -298,3 +298,15 @@ Returns a new array containing all the values of hash.
 42	hash.values_at(obj, ...)
 Returns a new array containing the values from hash that are associated with the given key or keys.
 =end
+
+# Hashes can be used to pass args into a function
+@varA = 1
+@varB = 2
+
+def ch(args)
+  @varA = args[:one]
+  @varB = args[:two]
+end
+
+ch(:one => 11, :two => 22) #or ch(one: 11, two: 22)
+p @varA, @varB
