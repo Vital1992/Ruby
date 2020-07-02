@@ -166,3 +166,20 @@ eql?, so:
 =end
 1 == 1.0     #=> true
 1.eql? 1.0   #=> false
+
+# Factorial recursive function
+def getFactorial(num)
+  if (num == 1)
+    sum = 1
+  else
+    sum = getFactorial(num-1)*num
+  end
+  return sum
+end
+puts
+p getFactorial(2)
+
+vr = false
+if (vr)
+  p "hi"
+end

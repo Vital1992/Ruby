@@ -251,7 +251,7 @@ class Lab < Dog
   end
 
   def to_s
-    "#@breed, #@name"
+    "#{@breed}, #{@name}"
   end
 end
 
@@ -304,6 +304,27 @@ puts
 bob.say_hi
 Person2.say_hi
 
+#Simplified ver of above (if we don't need methods, but can just use vars)
+class Person21
+  def initialize
+    @instance_var = "instance var"
+    @@class_var = "class var"
+  end
+
+  def say_hi
+    p "Hi, I have an #{@instance_var}"
+  end
+
+  def self.say_hi
+    p "Hi, I have a #{@@class_var}"
+  end
+end
+
+bob = Person21.new
+puts
+bob.say_hi
+Person21.say_hi
+
 # Referencing to class method---------------------------------------------------
 
 class Person3
@@ -334,3 +355,89 @@ p rob.age
 p rob.age_in_dog_years
 p Person3.all
 p Person3.num_people
+#-------------------------------------------------------------------------------
+@first = "name"
+def first(first)
+  p first[0] = first[0].chr.capitalize
+  @first = first
+  p @first
+end
+first("john")
+
+class Name
+  # Define default getter methods, but not setter methods.
+  attr_reader :first, :last
+  # When someone tries to set a first name, enforce rules about it.
+  def first(first)
+    if first == nil or first.size == 0
+      raise ArgumentError.new('Everyone must have a first name.')
+    end
+    first[0] = first[0].chr.capitalize
+    @first = first
+  end
+
+  # When someone tries to set a last name, enforce rules about it.
+  def last(last)
+    if last == nil or last.size == 0
+      raise ArgumentError.new('Everyone must have a last name.')
+    end
+    @last = last
+  end
+
+  def full_name
+    "#{@first} #{@last}"
+  end
+  # Delegate to the setter methods instead of setting the instance
+  # variables directly.
+  def initialize(first, last)
+    self.first(first)
+    self.last(last)
+  end
+end
+jacob = Name.new('Jacob', 'Berendes')
+jacob.first "nil"
+p jacob.full_name
+
+# Another self example
+class Person
+  def name
+    "Matz"
+  end
+
+  p self.name #=> "Person"
+end
+
+class Person2
+  def self.name
+    "Matz"
+  end
+
+  p self.name #=> "Matz"
+end
+
+#or:
+class Person21
+  class << self
+    def name
+      "Matz"
+    end
+  end
+  puts
+  p self.name#=> "Matz"
+end
+puts
+p Person21.name#=> "Matz"
+
+class Person3
+  class << self #creates new scope
+    def self.name
+      "John"
+    end
+
+    p self.name #=> "John"
+  end
+end
+p Person2.name #=> "Matz"
+p Person3.name #=> "Person3" because By doing class << Person, we are setting
+#self to Person's metaclass for the duration of the block. As a result, the
+#name method is added to Person's metaclass, rather than the class itself.

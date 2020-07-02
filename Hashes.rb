@@ -310,3 +310,65 @@ end
 
 ch(:one => 11, :two => 22) #or ch(one: 11, two: 22)
 p @varA, @varB
+
+# Dig - Extracts the nested value specified by the sequence of key objects by
+# calling dig at each step, returning nil if any intermediate step is nil.
+h = { foo: {bar: {baz: 1}}}
+
+h.dig(:foo, :bar, :baz)     #=> 1
+h.dig(:foo, :zot, :xyz)     #=> nil
+
+g = { foo: [10, 11, 12] }
+g.dig(:foo, 1)              #=> 11
+
+# Fetch - Returns a value from the hash for the given key. If the key can't be
+# found, there are several options: With no other arguments, it will raise a
+# KeyError exception; if default is given, then that will be returned; if the
+# optional code block is specified, then that will be run and its result returned.
+h = { "a" => 100, "b" => 200 }
+h.fetch("a")                            #=> 100
+h.fetch("z", "go fish")                 #=> "go fish"
+h.fetch("z") { |el| "go fish, #{el}"}   #=> "go fish, z"
+
+# fetch_values - Returns an array containing the values associated with the given
+# keys but also raises KeyError when one of keys can't be found. Also see
+# Hash#values_at and Hash#fetch.
+h = { "cat" => "feline", "dog" => "canine", "cow" => "bovine" }
+
+h.fetch_values("cow", "cat")                   #=> ["bovine", "feline"]
+#h.fetch_values("cow", "bird")                  # raises KeyError
+h.fetch_values("cow", "bird") { |k| k.upcase } #=> ["bovine", "BIRD"]
+
+# flatten, flatten(level) - returns a new array that is a one-dimensional
+# lattening of this hash. The optional level argument determines the level of
+# recursion to flatten.
+a =  {1=> "one", 2 => [2,"two"], 3 => "three"}
+a.flatten    # => [1, "one", 2, [2, "two"], 3, "three"]
+a.flatten(2) # => [1, "one", 2, 2, "two", 3, "three"]
+
+# invert - Returns a new hash created by using hsh's values as keys, and the
+# keys as values. If a key with the same value already exists in the hsh, then
+# the last one defined will be used, the earlier value(s) will be discarded.
+h = { "n" => 100, "m" => 100, "y" => 300, "d" => 200, "a" => 0 }
+h.invert   #=> {0=>"a", 100=>"m", 200=>"d", 300=>"y"}
+
+# rehash - Rebuilds the hash based on the current hash values for each key.
+# If values of key objects have changed since they were inserted, this method
+# will reindex hsh. If Hash#rehash is called while an iterator is traversing the
+# hash, a RuntimeError will be raised in the iterator.
+a = [ "a", "b" ]
+c = [ "c", "d" ]
+h = { a => 100, c => 300 }
+puts
+h[a]       #=> 100
+a[0] = "z"
+p h[a]       #=> nil
+h.rehash   #=> {["z", "b"]=>100, ["c", "d"]=>300}
+p h[a]       #=> 100
+
+puts
+params = { user: { address: { street: '123 Fake Street', town: 'Faketon', postcode: '12345' } } }
+# or
+params2 = { user: { address: { :street => '123 Fake Street', :town => 'Faketon', :postcode => '12345' } } }
+p params[:user][:address][:street]
+p params.dig(:user, :address, :street)

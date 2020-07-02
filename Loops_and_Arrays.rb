@@ -117,6 +117,5 @@ p find(@f,"c")
 # Syntax: obj << stuff is equivalent to obj.<<(stuff)
 
 puts
-@f<<"end"
+@f << "end"
 p @f #["#this is comment", "b", "c", "d", "e", "f", "g", "e", "h", "i", "k", "end"]
-p "Test"<<" Test2" #"Test Test2"
